@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindTrace - Giải Mã Thử Thách, Chinh Phục Sự Nghiệp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00F0FF;
+            --neon-purple: #B537F2;
+            --neon-pink: #FF2E97;
+            --neon-yellow: #FFD700;
+            --neon-green: #00FF88;
+            --dark-bg: #0A0E27;
+            --dark-surface: #12172E;
+            --darker: #060916;
+            --text-primary: #E8E9F3;
+            --text-secondary: #8B92B8;
+            --success: #00FF88;
+            --danger: #FF4757;
+            --warning: #FFA502;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(181, 55, 242, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 46, 151, 0.1) 0%, transparent 50%);
+            animation: backgroundPulse 20s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        /* Grid Pattern Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            letter-spacing: -1px;
+        }
+        
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--darker);
+            font-size: 1.5rem;
+            font-weight: 900;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            animation: logoGlow 2s ease-in-out infinite;
+            transform: rotate(-3deg);
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.8), 0 0 60px rgba(181, 55, 242, 0.5); }
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+        }
+        
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--darker);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+        
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 90px;
+            padding: 6rem 2rem 4rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 50px;
+            color: var(--neon-blue);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInDown 0.8s ease-out;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hero h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+        }
+        
+        .hero-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--neon-yellow);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+        
+        .btn-primary {
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--darker);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.4);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 60px rgba(0, 240, 255, 0.6);
+        }
+        
+        .btn-secondary {
+            padding: 1.25rem 3rem;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+        
+        /* Game Stats Dashboard */
+        .stats-dashboard {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--dark-surface);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(181, 55, 242, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 20px 60px rgba(0, 240, 255, 0.3);
+        }
+        
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .stat-value {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        /* Game Matrix Section */
+        .game-matrix {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 50px;
+            color: var(--neon-yellow);
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .section-header h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* Mission Cards Grid */
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .mission-card {
+            background: var(--dark-surface);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+        
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 30px 80px rgba(0, 240, 255, 0.3);
+        }
+        
+        .mission-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .mission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+            transform: rotate(-5deg);
+        }
+        
+        .mission-level {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 20px;
+            color: var(--neon-yellow);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .mission-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--neon-blue);
+            letter-spacing: -0.5px;
+        }
+        
+        .mission-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .mission-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .mission-stat span {
+            color: var(--neon-blue);
+            font-weight: 700;
+        }
+        
+        .mission-rewards {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .reward-badge {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            color: var(--success);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* Achievement System */
+        .achievements {
+            padding: 6rem 2rem;
+            background: var(--darker);
+        }
+        
+        .achievements-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .achievement-card {
+            background: var(--dark-surface);
+            border: 2px solid rgba(181, 55, 242, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .achievement-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(181, 55, 242, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .achievement-card:hover {
+            border-color: var(--neon-purple);
+            box-shadow: 0 20px 60px rgba(181, 55, 242, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .achievement-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 40px rgba(181, 55, 242, 0.5);
+        }
+        
+        .achievement-card h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--neon-purple);
+        }
+        
+        .achievement-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .achievement-progress {
+            margin-top: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .achievement-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        
+        /* Leaderboard */
+        .leaderboard {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .leaderboard-table {
+            background: var(--dark-surface);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .leaderboard-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(181, 55, 242, 0.1));
+            border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 150px 150px;
+            gap: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        
+        .leaderboard-row {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 150px 150px;
+            gap: 1rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .leaderboard-row:hover {
+            background: rgba(0, 240, 255, 0.05);
+        }
+        
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+        
+        .rank {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+        
+        .rank.gold { color: var(--neon-yellow); }
+        .rank.silver { color: #C0C0C0; }
+        .rank.bronze { color: #CD7F32; }
+        
+        .player {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .player-info h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .player-info p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .score {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+        
+        /* Roadmap Section */
+        .roadmap {
+            padding: 6rem 2rem;
+            background: var(--darker);
+        }
+        
+        .roadmap-timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            transform: translateX(-50%);
+        }
+        
+        .roadmap-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .roadmap-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .roadmap-content {
+            flex: 1;
+            background: var(--dark-surface);
+            border: 2px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content {
+            text-align: right;
+        }
+        
+        .roadmap-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            z-index: 10;
+        }
+        
+        .roadmap-phase {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-yellow);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .roadmap-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .roadmap-content ul {
+            list-style: none;
+            color: var(--text-secondary);
+        }
+        
+        .roadmap-content li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .roadmap-content li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            line-height: 0.95;
+        }
+        
+        .cta-content p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 4rem 2rem 2rem;
+            border-top: 2px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h3 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .footer-links h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            text-align: center;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .missions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 60px 1fr 100px;
+            }
+            
+            .leaderboard-header > *:nth-child(4),
+            .leaderboard-header > *:nth-child(5),
+            .leaderboard-row > *:nth-child(4),
+            .leaderboard-row > *:nth-child(5) {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .roadmap-timeline::before {
+                left: 30px;
+            }
+            
+            .roadmap-item {
+                flex-direction: row !important;
+                padding-left: 80px;
+            }
+            
+            .roadmap-marker {
+                left: 30px;
+            }
+            
+            .roadmap-item:nth-child(odd) .roadmap-content {
+                text-align: left;
+            }
+            
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                MindTrace
+            </div>
+            <ul class="nav-links">
+                <li><a href="#missions">Nhiệm vụ</a></li>
+                <li><a href="#achievements">Thành tích</a></li>
+                <li><a href="#leaderboard">Bảng xếp hạng</a></li>
+                <li><a href="#roadmap">Lộ trình</a></li>
+            </ul>
+            <a href="#" class="nav-cta">Bắt đầu</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">🎮 GAME-BASED CAREER PLATFORM</div>
+        <h1>MindTrace</h1>
+        <div class="hero-subtitle">Giải mã thử thách • Chinh phục sự nghiệp</div>
+        <p>
+            Chào mừng đến với thế giới nơi mỗi bài toán kinh doanh là một nhiệm vụ phá án. 
+            Giải quyết case thực tế, thu thập điểm kinh nghiệm, mở khóa thành tích và leo lên bảng xếp hạng 
+            để được các nhà tuyển dụng hàng đầu săn đón.
+        </p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">🎯 Bắt đầu nhiệm vụ</a>
+            <a href="#" class="btn-secondary">📊 Xem demo</a>
+        </div>
+    </section>
+
+    <!-- Stats Dashboard -->
+    <section class="stats-dashboard">
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <span class="stat-value">5,247</span>
+            <span class="stat-label">Nhiệm vụ hoàn thành</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <span class="stat-value">1,892</span>
+            <span class="stat-label">Người chơi hoạt động</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <span class="stat-value">847</span>
+            <span class="stat-label">Thành tích đạt được</span>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💼</div>
+            <span class="stat-value">156</span>
+            <span class="stat-label">Doanh nghiệp đối tác</span>
+        </div>
+    </section>
+
+    <!-- Game Matrix Section -->
+    <section id="missions" class="game-matrix">
+        <div class="section-header">
+            <span class="section-tag">🎮 GAME MATRIX</span>
+            <h2>Hệ thống nhiệm vụ</h2>
+            <p>Mỗi nhiệm vụ là một thử thách thực tế từ doanh nghiệp. Giải quyết thành công để tích lũy điểm, mở khóa badge và được mời phỏng vấn.</p>
+        </div>
+        
+        <div class="missions-grid">
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">🔍</div>
+                    <div class="mission-level">NEWBIE</div>
+                </div>
+                <h3>Detective Mode: CV Screening</h3>
+                <p>
+                    AI phân tích CV của bạn như một thám tử giải mã hồ sơ. Hệ thống tự động matching với các yêu cầu 
+                    công việc và tạo profile điểm mạnh của bạn.
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>5 phút</span></div>
+                    <div class="mission-stat">⭐ <span>+50 XP</span></div>
+                    <div class="mission-stat">🎯 <span>100% tự động</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">🏅 Profile Badge</div>
+                    <div class="reward-badge">📊 Skill Map</div>
+                </div>
+            </div>
+
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">🧩</div>
+                    <div class="mission-level">ROOKIE</div>
+                </div>
+                <h3>Puzzle Solver: Case Study Challenges</h3>
+                <p>
+                    Giải quyết các case study thực tế từ doanh nghiệp. Mỗi bài toán là một mảnh ghép trong bức tranh 
+                    career của bạn. AI mentor sẽ hướng dẫn và đánh giá chi tiết.
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>30-60 phút</span></div>
+                    <div class="mission-stat">⭐ <span>+200 XP</span></div>
+                    <div class="mission-stat">🎯 <span>Real Business</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">🎖️ Solver Badge</div>
+                    <div class="reward-badge">💡 AI Feedback</div>
+                </div>
+            </div>
+
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">🎯</div>
+                    <div class="mission-level">PRO</div>
+                </div>
+                <h3>Boss Battle: Assessment Tests</h3>
+                <p>
+                    Đối đầu với bài test tuyển dụng thật từ công ty. Đây là boss fight cuối cùng trước khi unlock 
+                    interview round. High stakes, high rewards!
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>60-90 phút</span></div>
+                    <div class="mission-stat">⭐ <span>+500 XP</span></div>
+                    <div class="mission-stat">🎯 <span>Direct to HR</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">👑 Elite Badge</div>
+                    <div class="reward-badge">📞 Interview Unlock</div>
+                </div>
+            </div>
+
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">📚</div>
+                    <div class="mission-level">TRAINING</div>
+                </div>
+                <h3>Training Ground: Practice Arena</h3>
+                <p>
+                    Kho tàng hàng trăm case study, scenario thực tế để rèn luyện kỹ năng. Không giới hạn số lần chơi, 
+                    AI feedback real-time giúp bạn level up không ngừng.
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>Unlimited</span></div>
+                    <div class="mission-stat">⭐ <span>Variable XP</span></div>
+                    <div class="mission-stat">🎯 <span>Skill Building</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">💪 Skill Points</div>
+                    <div class="reward-badge">📈 Progress Track</div>
+                </div>
+            </div>
+
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">🤖</div>
+                    <div class="mission-level">SPECIAL</div>
+                </div>
+                <h3>AI Co-Pilot: Smart Feedback System</h3>
+                <p>
+                    Nhận feedback chi tiết từ AI được train trên tiêu chí tuyển dụng thật. Biết được không chỉ điểm số 
+                    mà còn WHY và HOW để improve từng skill cụ thể.
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>Instant</span></div>
+                    <div class="mission-stat">⭐ <span>Insight Rich</span></div>
+                    <div class="mission-stat">🎯 <span>Personalized</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">🧠 Skill Insights</div>
+                    <div class="reward-badge">🎯 Gap Analysis</div>
+                </div>
+            </div>
+
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="mission-icon">🌟</div>
+                    <div class="mission-level">EPIC</div>
+                </div>
+                <h3>Career Quest: Job Matching Engine</h3>
+                <p>
+                    Dựa trên performance, skill set và achievement của bạn, AI engine tự động match với các vị trí 
+                    phù hợp. Càng chơi nhiều, càng mở khóa nhiều cơ hội.
+                </p>
+                <div class="mission-stats">
+                    <div class="mission-stat">⏱️ <span>Ongoing</span></div>
+                    <div class="mission-stat">⭐ <span>Career Impact</span></div>
+                    <div class="mission-stat">🎯 <span>Dream Jobs</span></div>
+                </div>
+                <div class="mission-rewards">
+                    <div class="reward-badge">💼 Job Offers</div>
+                    <div class="reward-badge">🚀 Career Launch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement System -->
+    <section id="achievements" class="achievements">
+        <div class="section-header">
+            <span class="section-tag">🏆 UNLOCK ACHIEVEMENTS</span>
+            <h2>Hệ thống thành tích</h2>
+            <p>Thu thập badges, unlock achievements, chứng minh năng lực của bạn với recruiter</p>
+        </div>
+        
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="achievement-icon">🔰</div>
+                <h4>First Blood</h4>
+                <p>Hoàn thành nhiệm vụ đầu tiên</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">🎯</div>
+                <h4>Sharp Shooter</h4>
+                <p>Đạt 90%+ trong 5 bài test liên tiếp</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 60%"></div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">🧠</div>
+                <h4>Brain Master</h4>
+                <p>Giải quyết 50 case study khó</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 45%"></div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">⚡</div>
+                <h4>Speed Demon</h4>
+                <p>Hoàn thành bài test trong top 10% nhanh nhất</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 30%"></div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">🔥</div>
+                <h4>On Fire</h4>
+                <p>Streak 7 ngày hoàn thành challenge</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-icon">👑</div>
+                <h4>Legend</h4>
+                <p>Top 1% trên toàn hệ thống</p>
+                <div class="achievement-progress">
+                    <div class="achievement-progress-bar" style="width: 15%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section id="leaderboard" class="leaderboard">
+        <div class="section-header">
+            <span class="section-tag">📊 COMPETITIVE RANKING</span>
+            <h2>Bảng xếp hạng</h2>
+            <p>Người chơi giỏi nhất tuần này - Ai sẽ lên top?</p>
+        </div>
+        
+        <div class="leaderboard-table">
+            <div class="leaderboard-header">
+                <div>Hạng</div>
+                <div>Người chơi</div>
+                <div>Điểm</div>
+                <div>Nhiệm vụ</div>
+                <div>Badge</div>
+            </div>
+
+            <div class="leaderboard-row">
+                <div class="rank gold">🥇</div>
+                <div class="player">
+                    <div class="player-avatar">NM</div>
+                    <div class="player-info">
+                        <h4>Nguyễn Minh</h4>
+                        <p>Marketing Specialist</p>
+                    </div>
+                </div>
+                <div class="score">2,847</div>
+                <div>23</div>
+                <div>12 🏆</div>
+            </div>
+
+            <div class="leaderboard-row">
+                <div class="rank silver">🥈</div>
+                <div class="player">
+                    <div class="player-avatar">TH</div>
+                    <div class="player-info">
+                        <h4>Trần Hương</h4>
+                        <p>Data Analyst</p>
+                    </div>
+                </div>
+                <div class="score">2,654</div>
+                <div>21</div>
+                <div>10 🏆</div>
+            </div>
+
+            <div class="leaderboard-row">
+                <div class="rank bronze">🥉</div>
+                <div class="player">
+                    <div class="player-avatar">LQ</div>
+                    <div class="player-info">
+                        <h4>Lê Quang</h4>
+                        <p>Product Manager</p>
+                    </div>
+                </div>
+                <div class="score">2,523</div>
+                <div>20</div>
+                <div>9 🏆</div>
+            </div>
+
+            <div class="leaderboard-row">
+                <div class="rank">4</div>
+                <div class="player">
+                    <div class="player-avatar">PA</div>
+                    <div class="player-info">
+                        <h4>Phạm Anh</h4>
+                        <p>UX Designer</p>
+                    </div>
+                </div>
+                <div class="score">2,389</div>
+                <div>19</div>
+                <div>8 🏆</div>
+            </div>
+
+            <div class="leaderboard-row">
+                <div class="rank">5</div>
+                <div class="player">
+                    <div class="player-avatar">DT</div>
+                    <div class="player-info">
+                        <h4>Đỗ Thảo</h4>
+                        <p>Business Analyst</p>
+                    </div>
+                </div>
+                <div class="score">2,201</div>
+                <div>18</div>
+                <div>7 🏆</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="roadmap">
+        <div class="section-header">
+            <span class="section-tag">🗺️ CAREER ROADMAP</span>
+            <h2>Lộ trình phát triển</h2>
+            <p>Từ newbie đến legend - Journey của bạn trên MindTrace</p>
+        </div>
+        
+        <div class="roadmap-timeline">
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <div class="roadmap-phase">Phase 1: Setup</div>
+                    <h3>Khởi động hành trình</h3>
+                    <ul>
+                        <li>Tạo profile và upload CV</li>
+                        <li>AI phân tích và gợi ý skill path</li>
+                        <li>Unlock training ground</li>
+                        <li>Làm quen với game mechanics</li>
+                    </ul>
+                </div>
+                <div class="roadmap-marker">🚀</div>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <div class="roadmap-phase">Phase 2: Training</div>
+                    <h3>Rèn luyện kỹ năng</h3>
+                    <ul>
+                        <li>Giải quyết practice cases</li>
+                        <li>Nhận AI feedback chi tiết</li>
+                        <li>Thu thập first achievements</li>
+                        <li>Build skill portfolio</li>
+                    </ul>
+                </div>
+                <div class="roadmap-marker">💪</div>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <div class="roadmap-phase">Phase 3: Real Battle</div>
+                    <h3>Thử thách thực chiến</h3>
+                    <ul>
+                        <li>Apply vào real job openings</li>
+                        <li>Làm assessment tests thật</li>
+                        <li>Get reviewed bởi HR</li>
+                        <li>Compete trên leaderboard</li>
+                    </ul>
+                </div>
+                <div class="roadmap-marker">⚔️</div>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <div class="roadmap-phase">Phase 4: Victory</div>
+                    <h3>Chinh phục đỉnh cao</h3>
+                    <ul>
+                        <li>Unlock interview rounds</li>
+                        <li>Nhận job offers</li>
+                        <li>Achieve legend status</li>
+                        <li>Mentor newbies khác</li>
+                    </ul>
+                </div>
+                <div class="roadmap-marker">👑</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready Player One?</h2>
+            <p>
+                Game đã bắt đầu. Hàng nghìn người chơi đang chinh phục challenges và unlock career opportunities. 
+                Bạn có dám join không?
+            </p>
+            <a href="#" class="btn-primary">🎮 Start Your Quest Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>MindTrace</h3>
+                <p>
+                    Game-based career platform nơi bạn chứng minh năng lực qua việc giải quyết thử thách thực tế. 
+                    Level up skills, collect achievements, unlock career opportunities.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#">Game Mechanics</a></li>
+                    <li><a href="#">Mission Types</a></li>
+                    <li><a href="#">Achievement System</a></li>
+                    <li><a href="#">Leaderboard Rules</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tutorial</a></li>
+                    <li><a href="#">Case Library</a></li>
+                    <li><a href="#">Skill Guides</a></li>
+                    <li><a href="#">Career Tips</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Forum</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MindTrace. Game on! 🎮</p>
+        </div>
+    </footer>
+</body>
+</html>
